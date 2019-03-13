@@ -9,18 +9,18 @@ def LexBFS(G):
     instance, G may be a dictionary mapping each vertex to its neighbor set.
     Running time is O(n+m) and additional space usage over G is O(n).
     """
-    P = PartitionRefinement(G) #một phân vùng 
-    S = Sequence(P, key=id) #một dãy, chuỗi 
+    P = PartitionRefinement(G) #một phân vùng chứa đồ thị (lọc phân vùng)
+    S = Sequence(P, key=id) #một dãy, chuỗi bao gồm các giá trị vừa lọc, thêm id
     sigma = [] #mảng sigma 
-    while S:
+    while S:#vòng lặp while đầu vào là một chuỗi
         set = S[0] #gọi set là giá trị đầu tiên của mảng, S[0]
         v = arbitrary_item(set) #v là 1 giá trị tùy ý
 
         sigma.append(v) #nối thêm giá trị của v vào sigma
 
         P.remove(v) #đồng thời remode giá trị đó ra khỏi phân vùng P
-        if not set: #nếu 
-            S.remove(set)
+        if not set: #thay đổi điều kiện cho đến khi nó thỏa mãn
+            S.remove(set) 
         for new,old in P.refine(G.neighbors(v)):
             S.insertBefore(old,new)
     return sigma
